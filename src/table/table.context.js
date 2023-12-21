@@ -1,33 +1,28 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
-import { useFilter, useSort, usePagination } from "./table.hooks";
+import React, { createContext, useContext, useMemo } from "react";
+import useTableData from "./hooks";
+import { Pagination } from "./components";
 
 const TableContext = createContext();
 
-export const TableProvider = ({
-  data,
-  options: { name, fieldOptions = [], pagination, allFilter },
-  children,
-}) => {
-  const [filters, setFilters] = useState([]);
-  const [sort, setSort] = useState({});
-  const filteredData = useFilter(data, filters);
-  const sortedData = useSort(filteredData, sort);
-  const { paginatedData, ...restOfPagination } = usePagination(sortedData);
+export const TableProvider = ({ data, options, children }) => {
+  const { pagination: hasPagination = true } = options;
+  const tableData = useTableData(data, options);
+  const { pagination } = tableData;
+  const memoizedPagination = useMemo(
+    () => <Pagination {...pagination} passive={!hasPagination} />,
+    [pagination, hasPagination]
+  );
 
   const value = {
     // data,
-    name,
-    fieldOptions,
-    pagination,
-    allFilter,
     lengthOfData: data.length,
-    filters,
-    setFilters,
-    sort,
-    setSort,
-    lengthOfFilteredData: filteredData.length,
-    processedData: paginatedData,
-    ...restOfPagination,
+    options,
+    ...tableData,
+    pagination: {
+      ...pagination,
+      component: memoizedPagination,
+    },
+    processedData: pagination.data,
   };
 
   return (

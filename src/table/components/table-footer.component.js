@@ -8,29 +8,14 @@ import {
   StyledTfoot,
   StyledCol,
   StyledColgroup,
-} from "./table.styled-components";
-import styled from "styled-components";
-import { Pagination, TableInfo } from "./shared.components";
+} from "./../styled-components";
+import { Renderer } from "./../../utilities";
 
-export const TableFooter = ({
-  fieldOptions,
-  pagination,
-  lengthOfData,
-  filters,
-  sort,
-  lengthOfFilteredData,
-  currentPage,
-  setCurrentPage,
-  totalPages,
-  hasPreviousPage,
-  hasNextPage,
-  pageSize,
-  setPageSize,
-}) => {
+export const TableFooter = ({ numberOfHeaders, components = [] }) => {
   return (
     <StyledTfoot>
       <StyledTr>
-        <StyledTd colSpan={fieldOptions.length}>
+        <StyledTd colSpan={numberOfHeaders}>
           <div
             style={{
               display: "flex",
@@ -43,29 +28,11 @@ export const TableFooter = ({
               gap: "10px",
             }}
           >
-            {pagination && (
-              <Pagination
-                {...{
-                  pagination,
-                  currentPage,
-                  setCurrentPage,
-                  totalPages,
-                  hasPreviousPage,
-                  hasNextPage,
-                  pageSize,
-                  setPageSize,
-                }}
-              />
-            )}
-            <TableInfo
-              {...{
-                fieldOptions,
-                lengthOfData,
-                filters,
-                sort,
-                lengthOfFilteredData,
-              }}
-            />
+            {components.map((component, index) => (
+              <div key={index} style={{ margin: "0 10px" }}>
+                <Renderer key={index} Component={component} />
+              </div>
+            ))}
           </div>
         </StyledTd>
       </StyledTr>

@@ -1,18 +1,55 @@
 import React from "react";
 import styled from "styled-components";
+import {
+  StyledThead,
+  StyledTr,
+  StyledTh,
+  StyledCol,
+  StyledColgroup,
+} from "./../styled-components";
+
+const PAGE_SIZE_OPTIONS = [
+  {
+    value: 10,
+    label: "10",
+  },
+  {
+    value: 25,
+    label: "25",
+  },
+  {
+    value: 50,
+    label: "50",
+  },
+  {
+    value: 100,
+    label: "100",
+  },
+  {
+    value: 250,
+    label: "250",
+  },
+  {
+    value: 500,
+    label: "500",
+  },
+  {
+    value: 1000,
+    label: "1000",
+  },
+];
 
 export const Pagination = ({
-  pagination,
+  passive,
   currentPage,
   setCurrentPage,
-  totalPages,
-  hasPreviousPage,
-  hasNextPage,
   pageSize,
   setPageSize,
+  totalPages,
 }) => {
-  if (!pagination) return null;
-  const options = [10, 25, 50, 100];
+  if (passive) return null;
+  const hasPreviousPage = currentPage > 1;
+  const hasNextPage = currentPage < totalPages;
   return (
     <StyledPagination>
       <button
@@ -29,17 +66,11 @@ export const Pagination = ({
       </button>
       <select
         value={pageSize}
-        onChange={(event) => {
-          setPageSize(parseInt(event.target.value));
-        }}
+        onChange={({ target }) => setPageSize(parseInt(target.value))}
       >
-        {options.map((option) => (
-          <option
-            key={option}
-            value={option}
-            selected={option === pageSize ? "selected" : ""}
-          >
-            {option}
+        {PAGE_SIZE_OPTIONS.map(({ value, label, disabled }, index) => (
+          <option key={index} value={value} disabled={disabled}>
+            {label}
           </option>
         ))}
       </select>
@@ -83,33 +114,22 @@ const StyledPagination = styled.div`
   }
 `;
 
-export const AllFilter = ({ filters, setFilter, allFilter }) => {
-  if (!allFilter) return null;
-
-  const filter = filters.find((filter) => filter.field === "all");
+export const SearchBox = ({ passive, searchTerm, setSearchTerm }) => {
+  if (passive) return null;
 
   return (
-    <StyledAllFilter>
+    <StyledSearchBox>
       <label>Search</label>
       <input
         type="text"
-        value={filter?.value}
-        onChange={(event) => {
-          const newFilters = filters.filter((filter) => filter.field !== "all");
-          if (event.target.value) {
-            newFilters.push({
-              field: "all",
-              value: event.target.value,
-            });
-          }
-          setFilter(newFilters);
-        }}
+        value={searchTerm}
+        onChange={({ target }) => setSearchTerm(target.value)}
       />
-    </StyledAllFilter>
+    </StyledSearchBox>
   );
 };
 
-const StyledAllFilter = styled.div`
+const StyledSearchBox = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
@@ -128,17 +148,19 @@ const StyledAllFilter = styled.div`
 
 export const TableInfo = ({
   fieldOptions,
+  passive,
   lengthOfData,
+  searchTerm,
   filters,
   sort,
   lengthOfFilteredData,
 }) => {
+  if (passive) return null;
+
   const getFilterHeaderName = (fn) =>
-    fn === "all"
-      ? "All"
-      : fieldOptions.find(({ fieldName, filterFieldName }) =>
-          filterFieldName ? filterFieldName === fn : fieldName === fn
-        ).headerName;
+    fieldOptions.find(({ fieldName, filterFieldName }) =>
+      filterFieldName ? filterFieldName === fn : fieldName === fn
+    ).headerName;
 
   const getSortedHeaderName = (fn) =>
     fieldOptions.find(({ fieldName, sortFieldName }) =>
@@ -165,7 +187,9 @@ export const TableInfo = ({
           borderBottom: "1px solid #eee",
         }}
       >
-        Showing {lengthOfFilteredData} of {lengthOfData} rows
+        Total {lengthOfData} rows
+        {filters.length > 0 &&
+          `(${lengthOfFilteredData} rows after filter and search)`}
       </div>
       <div
         style={{
@@ -174,7 +198,8 @@ export const TableInfo = ({
           borderBottom: "1px solid #eee",
         }}
       >
-        {filterMessage !== "" ? `Filtered by ${filterMessage}` : ""}
+        {filterMessage !== "" ? `Filtered by ${filterMessage}` : ""}{" "}
+        {searchTerm !== "" ? `Searched for ${searchTerm}` : ""}
       </div>
       <div
         style={{
@@ -198,4 +223,125 @@ border: '1px solid #ccc',
 borderRadius: '4px',
 margin: '5px',
 backgroundColor: '#f9f9f9'
+`;
+
+export const Filter = ({ field, passive, filter, setFilter }) => {
+  if (passive) return null;
+  return (
+    <StyledFilter>
+      <input
+        type="text"
+        value={filter.value}
+        onChange={({ target }) => setFilter({ field, value: target.value })}
+      />
+    </StyledFilter>
+  );
+};
+
+const StyledFilter = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  input {
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+  }
+`;
+
+export const Sort = ({ field, passive, sort, setSort }) => {
+  if (passive) return null;
+  return (
+    <StyledSort>
+      <button
+        onClick={() => {
+          setSort({
+            field,
+            direction:
+              sort.field === field && sort.direction === "asc" ? "desc" : "asc",
+          });
+        }}
+      >
+        {sort.field === field && sort.direction === "asc" ? "▲" : "▼"}
+      </button>
+    </StyledSort>
+  );
+};
+
+const StyledSort = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  button {
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    cursor: pointer;
+    &:disabled {
+      color: #aaa;
+      cursor: not-allowed;
+    }
+  }
+`;
+
+export const HeaderCell = ({
+  fieldName,
+  headerName,
+  filterable,
+  filterFieldName,
+  filter,
+  setFilter,
+  sortable,
+  sortFieldName,
+  sort,
+  setSort,
+  selection,
+  headerSelection,
+}) => {
+  return (
+    <StyledTh>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          margin: "10px",
+          border: "1px solid #ccc",
+          borderRadius: "5px",
+          padding: "10px",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: "10px",
+          }}
+        >
+          <StyledHeaderName>{headerName || fieldName}</StyledHeaderName>
+          <Sort
+            field={sortFieldName || fieldName}
+            passive={!sortable}
+            sort={sort}
+            setSort={setSort}
+          />
+        </div>
+        <Filter
+          field={filterFieldName || fieldName}
+          passive={!filterable}
+          filter={filter}
+          setFilter={setFilter}
+        />
+        {selection && headerSelection}
+      </div>
+    </StyledTh>
+  );
+};
+
+const StyledHeaderName = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
 `;

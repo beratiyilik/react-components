@@ -1,4 +1,4 @@
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 
 export const StyledTable = styled.table`
   border-collapse: collapse;
@@ -25,12 +25,17 @@ export const StyledCaption = styled.caption`
   margin-bottom: 10px;
 `;
 
-export const StyledColgroup = styled.colgroup`
-`;
+export const StyledColgroup = styled.colgroup``;
 
 export const StyledCol = styled.col`
-  width: ${({ width }) => css`${width ? width : "auto"}`};
-  background-color: ${({ color }) => css`${color ? color : "transparent"}`};
+  width: ${({ width }) =>
+    css`
+      ${width ? width : "auto"}
+    `};
+  background-color: ${({ color }) =>
+    css`
+      ${color ? color : "transparent"}
+    `};
 `;
 
 export const StyledThead = styled.thead`
@@ -51,8 +56,4 @@ export const StyledTfoot = styled.tfoot`
   background-color: #f1f1f1;
   color: #000;
   text-align: left;
-`;
-
-export const StyledTableContainer = styled.div`
-  overflow-x: auto;
 `;

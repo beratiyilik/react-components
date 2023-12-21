@@ -3,9 +3,28 @@ import "./App.css";
 import Table from "./table";
 import users from "./data/users.json";
 
-const maskPhone = (value) => value.replace(/\D/g, "").slice(0, 10);
+const beautifyPhone = (phoneNumber) => {
+  let cleanNumber = phoneNumber.replace(/\D/g, "");
+
+  return cleanNumber.length === 10
+    ? `(${cleanNumber.substring(0, 3)}) ${cleanNumber.substring(
+        3,
+        6
+      )}-${cleanNumber.substring(6)}`
+    : "Invalid phone number";
+};
 
 const fieldOptions = [
+  {
+    fieldName: "id",
+    headerName: "ID",
+    width: "5%",
+    // render: ({ row }) => <div>{row.id}</div>,
+    // render: ({ row }) => <input type="checkbox" checked={row.isChecked} />,
+    color: "purple",
+    selection: true,
+    selectionIdentifier: "id", // "id" | (row) => (value, index, array) => value.id === row.id,
+  },
   {
     fieldName: "firstName",
     headerName: "First Name",
@@ -13,8 +32,8 @@ const fieldOptions = [
     sortFieldName: "firstName",
     filterable: true,
     filterFieldName: "firstName",
-    width: "20%",
-    render: ({ row }) => <div>{`render ${row.firstName}`}</div>,
+    width: "19%",
+    render: ({ row }) => <div>{`Dr. ${row.firstName}`}</div>,
     color: "red",
   },
   {
@@ -24,7 +43,7 @@ const fieldOptions = [
     sortFieldName: "lastName",
     filterable: true,
     filterFieldName: "lastName",
-    width: "20%",
+    width: "19%",
     color: "blue",
   },
   {
@@ -34,7 +53,7 @@ const fieldOptions = [
     sortFieldName: "email",
     filterable: true,
     filterFieldName: "email",
-    width: "20%",
+    width: "19%",
     color: "green",
   },
   {
@@ -44,8 +63,8 @@ const fieldOptions = [
     sortFieldName: "phone",
     filterable: true,
     filterFieldName: "phone",
-    width: "20%",
-    render: ({ row }) => <div>{maskPhone(row.phone)}</div>,
+    width: "19%",
+    render: ({ row }) => <div>{beautifyPhone(row.phone)}</div>,
     color: "yellow",
   },
   {
@@ -55,7 +74,7 @@ const fieldOptions = [
     sortFieldName: "address",
     filterable: true,
     filterFieldName: "address",
-    width: "20%",
+    width: "19%",
     render: ({ row }) => <div>{row.address}</div>,
     color: "orange",
   },
@@ -64,8 +83,9 @@ const fieldOptions = [
 const options = {
   name: "Users",
   fieldOptions,
-  allFilter: true,
+  searchable: true,
   pagination: true,
+  identifier: "id", // "id" | (row) => (value, index, array) => value.id === row.id,
 };
 
 const App = () => {
