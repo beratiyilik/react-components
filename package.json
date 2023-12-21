@@ -1,0 +1,70 @@
+{
+  "name": "@beratiyilik/react-components",
+  "version": "0.1.0",
+  "description": "React Components is a collection of efficient and type-safe components implemented in React.",
+  "keywords": [
+    "react",
+    "components",
+    "ui",
+    "ui-components",
+    "ui-library",
+    "ui-kit",
+    "ui-design",
+    "ui-design-system",
+    "ui-design-components",
+    "ui-design-library",
+    "ui-design-kit"
+  ],
+  "author": "Berat İyilik <email@example.com> (https://beratiyilik.com/)",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/beratiyilik/react-components.git"
+  },
+  "homepage": "",
+  "bugs": {
+    "url": "https://github.com/beratiyilik/react-components/issues"
+  },
+  "engines": {
+    "npm": ">=10.2.3",
+    "node": ">=20.10.0",
+    "yarn": ">=1.22.21"
+  },
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "styled-components": "^6.1.2",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "clear": "rm -rf ./build",
+    "clear:all": "rm -rf ./build ./node_modules ./package-lock.json ./yarn.lock",
+    "start": "yarn react-scripts start",
+    "build": "yarn react-scripts build",
+    "test": "yarn react-scripts test",
+    "eject": "yarn react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
