@@ -1,12 +1,10 @@
-import React, { useEffect, useMemo } from "react";
-import { useTable } from "../table.context";
-import { TableFooter } from "./";
-import { Pagination, TableInfo } from "./shared.components";
+import React, { useMemo } from "react";
+import { useTable } from "../../table.context";
+import { TableFooter } from "..";
+import { TableSummary } from "../shared.components";
 
 export const FooterSection = () => {
   const {
-    // data,
-    lengthOfData,
     options: {
       name,
       fieldOptions = [],
@@ -14,7 +12,8 @@ export const FooterSection = () => {
       searchable,
       footerComponents = [],
     },
-
+    data,
+    // setData,
     search: { searchTerm, setSearchTerm, data: searchedData },
     filters: { filters, setFilters, data: filteredData },
     sort: { sort, setSort, data: sortedData },
@@ -23,22 +22,16 @@ export const FooterSection = () => {
       component: memoizedPagination,
       ...restOfPagination
     },
+    selection,
   } = useTable();
 
-  /*
-  const memoizedPagination = useMemo(
-    () => <Pagination passive={!pagination} {...restOfPagination} />,
-    [pagination, restOfPagination]
-  );
-  */
-
-  const memoizedTableInfo = useMemo(
+  const memoizedTableSummary = useMemo(
     () => (
-      <TableInfo
+      <TableSummary
         passive={false}
         {...{
           fieldOptions,
-          lengthOfData,
+          data,
           searchTerm,
           filters,
           sort,
@@ -46,7 +39,7 @@ export const FooterSection = () => {
         }}
       />
     ),
-    [fieldOptions, filteredData, filters, lengthOfData, searchTerm, sort]
+    [fieldOptions, filteredData, filters, data, searchTerm, sort]
   );
 
   const memoizedTableFooter = useMemo(
@@ -56,7 +49,7 @@ export const FooterSection = () => {
         components={[
           ...footerComponents,
           memoizedPagination,
-          memoizedTableInfo,
+          memoizedTableSummary,
         ]}
       />
     ),
@@ -64,7 +57,7 @@ export const FooterSection = () => {
       fieldOptions.length,
       footerComponents,
       memoizedPagination,
-      memoizedTableInfo,
+      memoizedTableSummary,
     ]
   );
 

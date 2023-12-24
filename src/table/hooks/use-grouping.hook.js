@@ -1,20 +1,15 @@
 import { useState, useMemo } from "react";
+import { multipleGroupBy } from "./../../utilities";
 
 const useGrouping = (data) => {
-  const [groupedBy, setGroupedBy] = useState("");
+  const [keys, setKeys] = useState([]);
 
-  const applyGrouping = useMemo(() => {
-    if (!groupedBy || groupedBy === "") return data;
+  const groupedData = useMemo(() => {
+    if (keys.length === 0) return data;
+    return multipleGroupBy(data, keys);
+  }, [data, keys]);
 
-    return data.reduce((acc, item) => {
-      const key = item[groupedBy];
-      acc[key] = acc[key] || [];
-      acc[key].push(item);
-      return acc;
-    }, {});
-  }, [data, groupedBy]);
-
-  return { groupedBy, setGroupedBy, data: applyGrouping };
+  return { data: groupedData, keys, setKeys };
 };
 
 export default useGrouping;

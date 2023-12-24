@@ -1,12 +1,12 @@
-import React, { useEffect, useMemo } from "react";
-import { useTable } from "../table.context";
-import { TableBody } from "./";
+import React, { useMemo } from "react";
+import { useTable } from "../../table.context";
+import { TableBody } from "..";
 
 export const BodySection = () => {
   const {
+    options: { name, fieldOptions = [], searchable, pagination },
     data,
-    lengthOfData,
-    options: { name, fieldOptions = [], pagination, searchable },
+    // setData,
     search: { searchTerm, setSearchTerm, data: searchedData },
     filters: { filters, setFilters, data: filteredData },
     sort: { sort, setSort, data: sortedData },
@@ -18,12 +18,14 @@ export const BodySection = () => {
   const memoizedTableBody = useMemo(
     () => (
       <TableBody
-        data={processedData}
         options={{
           fieldOptions,
         }}
-        toggle={toggle}
-        isSelected={isSelected}
+        data={processedData}
+        selection={{
+          toggle,
+          isSelected,
+        }}
       />
     ),
     [fieldOptions, processedData, toggle, isSelected]

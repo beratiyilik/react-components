@@ -1,15 +1,6 @@
 import React from "react";
-import {
-  StyledThead,
-  StyledTr,
-  StyledTh,
-  StyledTbody,
-  StyledTd,
-  StyledTfoot,
-  StyledCol,
-  StyledColgroup,
-} from "./../styled-components";
-import { Renderer } from "./../../utilities";
+import { StyledTr, StyledTd, StyledTfoot } from "./../../styled-components";
+import { ComponentRenderer } from "./../../../utilities";
 
 export const TableFooter = ({ numberOfHeaders, components = [] }) => {
   return (
@@ -30,7 +21,7 @@ export const TableFooter = ({ numberOfHeaders, components = [] }) => {
           >
             {components.map((component, index) => (
               <div key={index} style={{ margin: "0 10px" }}>
-                <Renderer key={index} Component={component} />
+                <ComponentRenderer key={index} component={component} />
               </div>
             ))}
           </div>

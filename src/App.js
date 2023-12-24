@@ -1,7 +1,7 @@
-import logo from "./logo.svg";
-import "./App.css";
+import { useState } from "react";
+import styled from "styled-components";
+import USERS from "./data/users.json";
 import Table from "./table";
-import users from "./data/users.json";
 
 const beautifyPhone = (phoneNumber) => {
   let cleanNumber = phoneNumber.replace(/\D/g, "");
@@ -21,7 +21,7 @@ const fieldOptions = [
     width: "5%",
     // render: ({ row }) => <div>{row.id}</div>,
     // render: ({ row }) => <input type="checkbox" checked={row.isChecked} />,
-    color: "purple",
+    color: "#96cec5",
     selection: true,
     selectionIdentifier: "id", // "id" | (row) => (value, index, array) => value.id === row.id,
   },
@@ -34,7 +34,7 @@ const fieldOptions = [
     filterFieldName: "firstName",
     width: "19%",
     render: ({ row }) => <div>{`Dr. ${row.firstName}`}</div>,
-    color: "red",
+    color: "#f1f1f1",
   },
   {
     fieldName: "lastName",
@@ -44,7 +44,7 @@ const fieldOptions = [
     filterable: true,
     filterFieldName: "lastName",
     width: "19%",
-    color: "blue",
+    color: "#e9aa52",
   },
   {
     fieldName: "email",
@@ -54,7 +54,7 @@ const fieldOptions = [
     filterable: true,
     filterFieldName: "email",
     width: "19%",
-    color: "green",
+    color: "#d97653",
   },
   {
     fieldName: "phone",
@@ -65,7 +65,7 @@ const fieldOptions = [
     filterFieldName: "phone",
     width: "19%",
     render: ({ row }) => <div>{beautifyPhone(row.phone)}</div>,
-    color: "yellow",
+    color: "#8f723c",
   },
   {
     fieldName: "address",
@@ -76,7 +76,7 @@ const fieldOptions = [
     filterFieldName: "address",
     width: "19%",
     render: ({ row }) => <div>{row.address}</div>,
-    color: "orange",
+    color: "#664833",
   },
 ];
 
@@ -89,11 +89,22 @@ const options = {
 };
 
 const App = () => {
+  const [users, setUsers] = useState(USERS);
   return (
-    <div className="App">
-      <Table options={options} data={users} />
-    </div>
+    <StyledApp>
+      <Table options={options} data={users} /* setUsers={setUsers} */ />
+    </StyledApp>
   );
 };
 
 export default App;
+
+const StyledApp = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  // background-color: #ff6961;
+`;

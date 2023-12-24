@@ -1,15 +1,13 @@
 import React from "react";
 
-export const Renderer = ({ Component, ...props }) => {
-  const isFunction = typeof Component === "function";
-  const isObject = typeof Component === "object";
-  const isString = typeof Component === "string";
+export const ComponentRenderer = ({ component, ...props }) => {
+  const Component = component;
+  if (typeof Component === "function") return <Component {...props} />;
 
-  if (isFunction) return <Component {...props} />;
+  // if (typeof Component === "object") return Component;
+  if (React.isValidElement(Component)) return Component;
 
-  if (isObject) return Component;
-
-  if (isString) return <div>{Component}</div>;
+  if (typeof Component === "string") return <>{Component}</>;
 
   return null;
 };

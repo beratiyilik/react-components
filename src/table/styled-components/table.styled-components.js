@@ -4,6 +4,9 @@ export const StyledTable = styled.table`
   border-collapse: collapse;
   width: 100%;
   margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
 `;
 
 export const StyledTh = styled.th`
@@ -14,18 +17,30 @@ export const StyledTr = styled.tr`
   &:hover {
     background-color: #ddd;
   }
+  &:nth-child(even) {
+  }
 `;
 
 export const StyledTd = styled.td`
   padding: 10px;
+  border-bottom: 1px solid #ddd;
+  &:last-child {
+  }
 `;
 
 export const StyledCaption = styled.caption`
   font-size: 1.5em;
-  margin-bottom: 10px;
+  font-weight: bold;
+  background-color: #475c6c;
 `;
 
-export const StyledColgroup = styled.colgroup``;
+export const StyledColgroup = styled.colgroup`
+  background-color: #f1f1f1;
+  color: #000;
+  text-align: left;
+  text-transform: uppercase;
+  border-bottom: 1px solid #ddd;
+`;
 
 export const StyledCol = styled.col`
   width: ${({ width }) =>
@@ -36,24 +51,33 @@ export const StyledCol = styled.col`
     css`
       ${color ? color : "transparent"}
     `};
+  color: ${({ color }) =>
+    css`
+      ${color ? color : "transparent"}
+    `};
+  text-align: ${({ align }) =>
+    css`
+      ${align ? align : "left"}
+    `};
 `;
 
 export const StyledThead = styled.thead`
-  background-color: #f1f1f1;
   color: #000;
   font-weight: bold;
   text-align: left;
-  text-transform: uppercase;
   border-bottom: 1px solid #ddd;
+  background-color: #8a8583;
 `;
 
 export const StyledTbody = styled.tbody`
   color: #000;
   text-align: left;
+  border-bottom: 1px solid #ddd;
 `;
 
 export const StyledTfoot = styled.tfoot`
-  background-color: #f1f1f1;
   color: #000;
   text-align: left;
+  border-bottom: 1px solid #ddd;
+  background-color: #cd8b62;
 `;

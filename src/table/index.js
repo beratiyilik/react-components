@@ -8,9 +8,9 @@ import {
 } from "./components";
 import { StyledTable, StyledTableContainer } from "./styled-components";
 
-const Table = ({ options, data = [] }) => {
+const Table = ({ options, data = [] /* , setData = () => null */ }) => {
   return (
-    <TableProvider options={options} data={data}>
+    <TableProvider options={options} data={data} /* setData={setData} */>
       <StyledTableContainer>
         <StyledTable>
           <TopSection />
