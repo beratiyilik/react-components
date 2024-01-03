@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import USERS from "./data/users.json";
 import Table from "./table";
+import useNotification, { NotificationProvider } from "./notification";
 
 const beautifyPhone = (phoneNumber) => {
   let cleanNumber = phoneNumber.replace(/\D/g, "");
@@ -91,9 +92,12 @@ const options = {
 const App = () => {
   const [users, setUsers] = useState(USERS);
   return (
-    <StyledApp>
-      <Table options={options} data={users} /* setUsers={setUsers} */ />
-    </StyledApp>
+    <NotificationProvider>
+      <StyledApp>
+        <Table options={options} data={users} /* setUsers={setUsers} */ />
+        <TestComponent />
+      </StyledApp>
+    </NotificationProvider>
   );
 };
 
@@ -108,3 +112,47 @@ const StyledApp = styled.div`
   background-color: #f5f5f5;
   // background-color: #ff6961;
 `;
+
+const TestComponent = () => {
+  const notify = useNotification();
+  const notifications = [
+    {
+      id: 1,
+      type: "Success",
+      message: "Success message",
+      duration: 10000,
+    },
+    {
+      id: 2,
+      type: "Info",
+      message: "Info message",
+      duration: 8000,
+    },
+    {
+      id: 3,
+      type: "Warning",
+      message: "Warning message",
+      duration: 6000,
+    },
+    {
+      id: 4,
+      type: "Error",
+      message: "Error message",
+      duration: 2000,
+    },
+  ];
+  return (
+    <div>
+      <h1>Test Component</h1>
+      <button
+        onClick={() => {
+          notifications.forEach(({type, message, duration}) => {
+            notify.show(message, type, duration);
+          });
+        }}
+      >
+        Success
+      </button>
+    </div>
+  );
+};
