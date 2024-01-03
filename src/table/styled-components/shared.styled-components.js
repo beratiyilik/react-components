@@ -2,16 +2,6 @@ import styled from "styled-components";
 
 /* table */
 export const StyledTableContainer = styled.div`
-  overflow-x: auto;
-  overflow-y: hidden;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 20px;
   background-color: #e9e0c9;
 `;
 

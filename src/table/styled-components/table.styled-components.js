@@ -1,46 +1,45 @@
 import styled, { css } from "styled-components";
 
 export const StyledTable = styled.table`
-  border-collapse: collapse;
+  position: relative;
   width: 100%;
-  margin-bottom: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  overflow: hidden;
+  table-layout: fixed;
+  border-spacing: 0;
+  border-collapse: separate;
 `;
 
 export const StyledTh = styled.th`
-  padding: 10px;
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
 `;
 
 export const StyledTr = styled.tr`
   &:hover {
-    background-color: #ddd;
+    background-color: #f5f5f5;
   }
   &:nth-child(even) {
+    background-color: #f9f9f9;
   }
 `;
 
 export const StyledTd = styled.td`
-  padding: 10px;
+  padding: 8px;
+  text-align: left;
   border-bottom: 1px solid #ddd;
+
   &:last-child {
+    text-align: right;
   }
 `;
 
 export const StyledCaption = styled.caption`
-  font-size: 1.5em;
+  padding: 8px;
+  text-align: left;
   font-weight: bold;
-  background-color: #475c6c;
 `;
 
-export const StyledColgroup = styled.colgroup`
-  background-color: #f1f1f1;
-  color: #000;
-  text-align: left;
-  text-transform: uppercase;
-  border-bottom: 1px solid #ddd;
-`;
+export const StyledColgroup = styled.colgroup``;
 
 export const StyledCol = styled.col`
   width: ${({ width }) =>
@@ -61,23 +60,8 @@ export const StyledCol = styled.col`
     `};
 `;
 
-export const StyledThead = styled.thead`
-  color: #000;
-  font-weight: bold;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-  background-color: #8a8583;
-`;
+export const StyledThead = styled.thead``;
 
-export const StyledTbody = styled.tbody`
-  color: #000;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-`;
+export const StyledTbody = styled.tbody``;
 
-export const StyledTfoot = styled.tfoot`
-  color: #000;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-  background-color: #cd8b62;
-`;
+export const StyledTfoot = styled.tfoot``;

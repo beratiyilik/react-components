@@ -4,15 +4,15 @@ import { ToggleSwitch } from "./../shared.components";
 import { ComponentRenderer } from "./../../../utilities";
 
 export const BodyCell = ({ row, fieldOption, toggle, isSelected }) => {
-  const { fieldName, render, selection } = fieldOption;
+  const { fieldName, headerName, render, selection } = fieldOption;
   if (selection)
     return (
-      <StyledTd>
+      <StyledTd data-label={headerName || fieldName}>
         <ToggleSwitch selected={isSelected(row)} onChange={() => toggle(row)} />
       </StyledTd>
     );
   return (
-    <StyledTd>
+    <StyledTd data-label={headerName || fieldName}>
       {ComponentRenderer({ component: render ? render : row[fieldName], row })}
     </StyledTd>
   );

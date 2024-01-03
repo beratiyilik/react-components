@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import USERS from "./data/users.json";
 import Table from "./table";
+import useNotification, { NotificationProvider } from "./notification";
 
 const beautifyPhone = (phoneNumber) => {
   let cleanNumber = phoneNumber.replace(/\D/g, "");
@@ -91,20 +92,14 @@ const options = {
 const App = () => {
   const [users, setUsers] = useState(USERS);
   return (
-    <StyledApp>
-      <Table options={options} data={users} /* setUsers={setUsers} */ />
-    </StyledApp>
+    <NotificationProvider>
+      <StyledApp>
+        <Table options={options} data={users} /* setUsers={setUsers} */ />
+      </StyledApp>
+    </NotificationProvider>
   );
 };
 
 export default App;
 
-const StyledApp = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f5f5f5;
-  // background-color: #ff6961;
-`;
+const StyledApp = styled.div``;
