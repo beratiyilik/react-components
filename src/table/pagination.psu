@@ -1,0 +1,76 @@
+// Defines the structure for pagination requests
+Interface PaginationRequest {
+  pageNumber: Integer
+  pageSize: Integer
+}
+
+// Defines the structure for pagination responses
+Interface PaginationResponse {
+  pageNumber: Integer
+  pageSize: Integer
+  totalElements: Integer
+  totalPages: Integer
+}
+
+// Defines the structure for sorting fields
+Interface SortField {
+  field: String
+  direction: SortDirection
+}
+
+// Enum for specifying sort direction
+Enum SortDirection {
+  ASC,
+  DESC
+}
+
+// Defines the structure for filters
+Interface Filter {
+  field: String
+  value: String
+  operation: FilterOperation
+}
+
+// Enum for specifying filter operations
+Enum FilterOperation {
+  EQUALS,
+  NOT_EQUALS,
+  GREATER_THAN,
+  LESS_THAN,
+  CONTAINS,
+  NOT_CONTAINS
+}
+
+// Defines the structure for page requests, combining pagination request, sorting, and filtering
+Interface PageRequest {
+  pagination: PaginationRequest
+  sort: Array of SortField
+  filters: Array of Filter
+}
+
+// Defines the structure for page responses, including the content and pagination response, along with sorting and filtering details
+Interface PageResponse<T> {
+  content: Array of T
+  pagination: PaginationResponse
+  filters: Array of Filter
+  sort: Array of SortField
+}
+
+
+// Function to fetch a page of data based on the given PageRequest
+Function fetchPage(request: PageRequest): PageResponse<T> {
+  // Implement the logic to fetch data from the server according to the parameters in `request`
+  // This includes handling pagination (request), sorting, and filtering based on the request details
+  // Calculate the totalElements and totalPages based on the data and pagination request
+  // Return a `PageResponse<T>` object with the fetched content, pagination response, and request details for filtering and sorting
+}
+
+// Function to retrieve a page of data from the database based on the given PageRequest
+Function getPage(request: PageRequest): PageResponse<T> {
+  // Implement the logic to retrieve data from the database according to the parameters in `request`
+  // This should handle pagination (request), sorting, and filtering as specified in the request
+  // Calculate the totalElements and totalPages based on the data and pagination request
+  // Package the retrieved data, pagination response, and the request details for filtering and sorting into a `PageResponse<T>` object
+  // Return the `PageResponse<T>` object
+}
+
